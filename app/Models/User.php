@@ -51,11 +51,6 @@ use Laravel\Sanctum\HasApiTokens;
         ];
     }
 
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
     public function incidents()
     {
         return $this->hasMany(Incident::class, 'survivor_id');
@@ -99,6 +94,10 @@ use Laravel\Sanctum\HasApiTokens;
         return $this;
     }
 
+     public function roles(): BelongsToMany
+     {
+         return $this->belongsToMany(Role::class);
+     }
 
     public function hasRole(RoleName $role): bool
     {

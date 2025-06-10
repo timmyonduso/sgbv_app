@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\SystemSettingsController;
+use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Web\CaseWebController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\IncidentWebController;
@@ -22,6 +27,19 @@ Route::middleware('web')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // About page route
+    Route::get('/about', function () {
+        return inertia('about/Index');
+    })->name('about');
+
+// Chat page routes
+    Route::get('chat', [ChatController::class, 'index'])->name('chat');
+    Route::post('chat', [ChatController::class, 'send']);
+
+// Contact page routes
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // Incident routes
     Route::prefix('incidents')->group(function () {
@@ -73,6 +91,40 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Permission management
         Route::get('/permissions', [PermissionWebController::class, 'index'])->name('admin.permissions.index');
+    });
+
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        // Admin Dashboard
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+        // User Management
+        Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}', [UserManagementController::class, 'show'])->name('users.show');
+        Route::put('/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
+        Route::post('/users/{user}/roles', [UserManagementController::class, 'assignRole'])->name('users.assign-role');
+        Route::delete('/users/{user}/roles/{role}', [UserManagementController::class, 'removeRole'])->name('users.remove-role');
+        Route::put('/users/{user}/status', [UserManagementController::class, 'updateStatus'])->name('users.update-status');
+
+        // System Settings
+        Route::get('/settings', [SystemSettingsController::class, 'index'])->name('settings.index');
+        Route::put('/settings', [SystemSettingsController::class, 'update'])->name('settings.update');
+
+        // Roles and Permissions
+        Route::get('/roles', [SystemSettingsController::class, 'roles'])->name('roles.index');
+        Route::post('/roles', [SystemSettingsController::class, 'storeRole'])->name('roles.store');
+        Route::put('/roles/{role}', [SystemSettingsController::class, 'updateRole'])->name('roles.update');
+        Route::delete('/roles/{role}', [SystemSettingsController::class, 'destroyRole'])->name('roles.destroy');
+        Route::post('/roles/{role}/permissions', [SystemSettingsController::class, 'assignPermission'])->name('roles.assign-permission');
+
+        // System Actions
+        Route::post('/backup', [AdminDashboardController::class, 'backup'])->name('backup');
+        Route::get('/reports', [AdminDashboardController::class, 'reports'])->name('reports');
+        Route::get('/alerts', [AdminDashboardController::class, 'alerts'])->name('alerts');
+        Route::put('/alerts/{alert}/resolve', [AdminDashboardController::class, 'resolveAlert'])->name('alerts.resolve');
+
+        // Activity Logs
+        Route::get('/activity', [AdminDashboardController::class, 'activity'])->name('activity');
     });
 });
 

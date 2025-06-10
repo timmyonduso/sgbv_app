@@ -284,16 +284,17 @@ export default function Show({ incident, googleMapsApiKey }: Props) {
                                         <div>{incident.location || 'Not specified'}</div>
 
                                         {/* Add the map component if we have coordinates */}
-                                        {incident.latitude && incident.longitude && (
-                                            <div className="mt-3">
-                                                <GoogleMap
-                                                    latitude={incident.latitude}
-                                                    longitude={incident.longitude}
-                                                    apiKey={googleMapsApiKey}
-                                                    height="200px"
-                                                />
-                                            </div>
-                                        )}
+                                        {incident.latitude && incident.longitude &&
+                                            !isNaN(incident.latitude) && !isNaN(incident.longitude) && (
+                                                <div className="mt-3">
+                                                    <GoogleMap
+                                                        latitude={Number(incident.latitude)}
+                                                        longitude={Number(incident.longitude)}
+                                                        apiKey={googleMapsApiKey}
+                                                        height="200px"
+                                                    />
+                                                </div>
+                                            )}
                                     </div>
                                 </div>
                                 {reporter && (

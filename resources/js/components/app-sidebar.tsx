@@ -26,7 +26,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Find Support',
-        href: '/support-services',
+        href: '/chat',
         icon: Users, // Using Users for support services
     },
     {
@@ -44,16 +44,16 @@ const footerNavItems: NavItem[] = [
         href: '/about',
         icon: null,
     },
-    {
-        title: 'Terms of Service',
-        href: '/terms',
-        icon: null,
-    },
-    {
-        title: 'Privacy Policy',
-        href: '/privacy',
-        icon: null,
-    },
+    // {
+    //     title: 'Terms of Service',
+    //     href: '/terms',
+    //     icon: null,
+    // },
+    // {
+    //     title: 'Privacy Policy',
+    //     href: '/privacy',
+    //     icon: null,
+    // },
     {
         title: 'Contact',
         href: '/contact',

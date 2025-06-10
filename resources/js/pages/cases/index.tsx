@@ -145,14 +145,14 @@ export default function CasesIndex({ cases, caseworkers, statuses, filters, can 
                         <CaseReportButton cases={cases.data} filters={filters} />
                         <CaseReportDialog cases={cases.data} filters={filters} />
 
-                        {can.create_case && (
-                            <Link href={route("cases.create")}>
-                                <Button>
-                                    <Plus className="h-4 w-4 mr-2" />
-                                    New Case
-                                </Button>
-                            </Link>
-                        )}
+                        {/*{can.create_case && (*/}
+                        {/*    <Link href={route("cases.create")}>*/}
+                        {/*        <Button>*/}
+                        {/*            <Plus className="h-4 w-4 mr-2" />*/}
+                        {/*            New Case*/}
+                        {/*        </Button>*/}
+                        {/*    </Link>*/}
+                        {/*)}*/}
                     </div>
                 </div>
 
